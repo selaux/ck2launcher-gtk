@@ -281,7 +281,7 @@ class MainWindow(Gtk.Window):
         print('Starting CK2: {0}'.format(' '.join(command)))
         subprocess.Popen(command).pid
 
-        Gtk.main_quit()
+        self.close()
 
 win = MainWindow()
 win.show_all()
