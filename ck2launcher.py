@@ -268,7 +268,7 @@ class MainWindow(Gtk.Window):
         """
             Start Crusader Kings
         """
-        command = [ get_binary_path() ]
+        command = [ get_binary_path(self.config), '-skiplauncher' ]
 
         for mod, selected in self.config['mods'].items():
             if selected:
@@ -280,7 +280,8 @@ class MainWindow(Gtk.Window):
 
         print('Starting CK2: {0}'.format(' '.join(command)))
         subprocess.Popen(command).pid
-        self.close()
+
+        Gtk.main_quit()
 
 win = MainWindow()
 win.show_all()
