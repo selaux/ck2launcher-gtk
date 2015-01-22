@@ -131,9 +131,10 @@ class MainWindow(Gtk.Window):
         main_box = Gtk.Box(spacing=20, orientation=Gtk.Orientation.VERTICAL)
 
         image_path = os.path.join(self.config['game_dir'], 'launcher/launcher_bg2.jpg')
-        image = Gtk.Image()
-        image.set_from_file(image_path)
-        main_box.pack_start(image, True, True, 0)
+        if (os.path.exists(image_path)):
+            image = Gtk.Image()
+            image.set_from_file(image_path)
+            main_box.pack_start(image, True, True, 0)
 
         checkboxes_box = Gtk.Box(spacing=20)
 
@@ -203,17 +204,18 @@ class MainWindow(Gtk.Window):
     def set_background(self):
         style_provider = Gtk.CssProvider()
         background_path = os.path.join(self.config['game_dir'], 'launcher/background.jpg')
-        css= str.encode("""
-        #main, #start_button {{
-            background-image: url('{0:s}');
-        }}
-        """.format(background_path))
-        style_provider.load_from_data(css)
-        Gtk.StyleContext.add_provider_for_screen(
-            Gdk.Screen.get_default(),
-            style_provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-        )
+        if (os.path.exists(background_path)):
+            css= str.encode("""
+            #main, #start_button {{
+                background-image: url('{0:s}');
+            }}
+            """.format(background_path))
+            style_provider.load_from_data(css)
+            Gtk.StyleContext.add_provider_for_screen(
+                Gdk.Screen.get_default(),
+                style_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            )
 
     def close(self, *args):
         write_config(self.config)
