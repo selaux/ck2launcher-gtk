@@ -45,8 +45,14 @@ def default_ck2_config_path():
     }
     return paths[os.name]
 
+def get_binary_path(config):
+    return os.path.join(config['game_dir'], 'ck2')
+
 def all_paths_exist(config):
-    return os.path.exists(config['game_dir']) and os.path.exists(config['config_dir'])
+    return os.path.exists(config['game_dir']) \
+        and os.path.exists(get_binary_path(config)) \
+        and os.path.exists(config['config_dir'])
+
 
 def read_name_from_ini(path):
     """
@@ -260,7 +266,7 @@ class MainWindow(Gtk.Window):
         """
             Start Crusader Kings
         """
-        command = [ os.path.join(self.config['game_dir'], 'ck2') ]
+        command = [ get_binary_path() ]
 
         for mod, selected in self.config['mods'].items():
             if selected:
